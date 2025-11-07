@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindMelt Arena</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Bebas Neue', sans-serif; background: #000; color: #fff; margin: 0; padding: 20px; text-align: center; }
+        h1 { font-size: 3.5em; color: #FF4E00; margin: 10px; }
+        #chat { border: 2px solid #FF4E00; height: 400px; overflow-y: scroll; padding: 15px; margin: 20px auto; width: 85%; background: #111; border-radius: 12px; }
+        #input { width: 65%; padding: 14px; font-size: 1.2em; border: 2px solid #FF4E00; border-radius: 8px; margin: 5px; }
+        button { background: #FF4E00; color: #000; border: none; padding: 14px 28px; font-size: 1.3em; cursor: pointer; border-radius: 8px; font-weight: bold; }
+        #score { font-size: 2em; color: #FF4E00; margin: 15px; }
+        .message { margin: 10px 0; padding: 12px; border-radius: 10px; max-width: 80%; display: inline-block; }
+        .user { background: #333; text-align: right; margin-left: auto; }
+        .ai { background: #FF4E00; color: #000; text-align: left; }
+    </style>
+</head>
+<body>
+    <h1>⚡ MINDMELT ARENA ⚡</h1>
+    <p>Debate AI. Melt Bias. Win Clarity.</p>
+    <div id="score">Bias Melt Score: 100 (Streak: 0)</div>
+    <div id="chat"></div>
+    <input type="text" id="input" placeholder="Debate: Is AI dangerous?">
+    <button onclick="debate()">MELT IT</button>
+
+    <script>
+        let score = 100, streak = 0;
+        const replies = [
+            "Socrates: True wisdom is knowing you know nothing.",
+            "Elon: AI is the biggest risk we face — or the greatest opportunity.",
+            "Cleopatra: Power is taken, not given. What's your strategy?",
+            "Grok: I am built by xAI to seek truth — what’s yours?",
+            "Trump: It’s going to be HUGE. AI? Tremendous. But we need walls."
+        ];
+
+        function debate() {
+            const input = document.getElementById('input').value.trim();
+            if (!input) return;
+            addMessage('You', input, 'user');
+            document.getElementById('input').value = '';
+
+            setTimeout(() => {
+                const reply = replies[Math.floor(Math.random() * replies.length)];
+                addMessage('AI', reply, 'ai');
+                updateScore(reply);
+            }, 800);
+        }
+
+        function addMessage(sender, text, type) {
+            const chat = document.getElementById('chat');
+            const div = document.createElement('div');
+            div.className = `message ${type}`;
+            div.innerHTML = `<strong>${sender}:</strong> ${text}`;
+            chat.appendChild(div);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function updateScore(reply) {
+            score = Math.max(0, score - Math.floor(reply.length / 6));
+            streak++;
+            document.getElementById('score').innerText = `Bias Melt Score: ${score} (Streak: ${streak})`;
+            if (streak === 7) alert('7-DAY STREAK! Share your score → mindmeltarena.com');
+        }
+
+        document.getElementById('input').addEventListener('keypress', e => { if (e.key === 'Enter') debate(); });
+    </script>
+</body>
+</html>Add MindMelt Arena app
